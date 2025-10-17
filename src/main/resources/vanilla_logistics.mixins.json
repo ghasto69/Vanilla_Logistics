@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.ghasto.logistical_improvements.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FactoryPanelBehaviourMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "FactoryPanelScreenMixin"
+  ]
+}
