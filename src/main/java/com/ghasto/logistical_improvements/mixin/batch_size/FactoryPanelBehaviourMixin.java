@@ -1,6 +1,6 @@
-package com.ghasto.logistical_improvements.mixin;
+package com.ghasto.logistical_improvements.mixin.batch_size;
 
-import com.ghasto.logistical_improvements.BatchSizeAccessor;
+import com.ghasto.logistical_improvements.batch_size.BatchSizeAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock;

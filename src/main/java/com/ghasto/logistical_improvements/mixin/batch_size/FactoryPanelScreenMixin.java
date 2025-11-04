@@ -1,20 +1,16 @@
-package com.ghasto.logistical_improvements.mixin;
+package com.ghasto.logistical_improvements.mixin.batch_size;
 
-import com.ghasto.logistical_improvements.BatchSizeAccessor;
-import com.ghasto.logistical_improvements.ConfigureBatchSize;
-import com.ghasto.logistical_improvements.LogisticalImprovements;
-import com.simibubi.create.content.logistics.BigItemStack;
+import com.ghasto.logistical_improvements.batch_size.BatchSizeAccessor;
+import com.ghasto.logistical_improvements.batch_size.ConfigureBatchSize;
+import com.ghasto.logistical_improvements.VanillaLogistics;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;
 import com.simibubi.create.foundation.gui.widget.ScrollInput;
-import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.platform.CatnipServices;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -49,7 +45,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
         if(!restocker) return;
 
         graphics.blit(
-                ResourceLocation.fromNamespaceAndPath(LogisticalImprovements.MODID, "textures/gui/batch_size_prompt.png"),
+                ResourceLocation.fromNamespaceAndPath(VanillaLogistics.MODID, "textures/gui/batch_size_prompt.png"),
                 minimumBatchSize.getX() - 1,
                 minimumBatchSize.getY() - 1,
                 0,
@@ -61,7 +57,7 @@ public abstract class FactoryPanelScreenMixin extends AbstractSimiScreen {
         );
 
         graphics.blit(
-                ResourceLocation.fromNamespaceAndPath(LogisticalImprovements.MODID, "textures/gui/bar.png"),
+                ResourceLocation.fromNamespaceAndPath(VanillaLogistics.MODID, "textures/gui/bar.png"),
                 guiLeft + 51,
                 guiTop + windowHeight - 32,
                 0,

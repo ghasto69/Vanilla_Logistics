@@ -1,4 +1,4 @@
-package com.ghasto.logistical_improvements;
+package com.ghasto.logistical_improvements.batch_size;
 
 public interface BatchSizeAccessor {
     int getMinimumBatchSize();
