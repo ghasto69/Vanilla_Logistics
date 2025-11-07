@@ -1,3 +1,4 @@
 {
-  "tooltip.vanilla_logistics.minimum_batch_size": "Minimum batch size"
+  "tooltip.vanilla_logistics.minimum_batch_size": "Minimum batch size",
+  "packager_color_label": "Package Color"
 }

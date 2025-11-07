@@ -2,10 +2,8 @@ package com.ghasto.logistical_improvements.cog_material;
 
 import com.ghasto.logistical_improvements.VanillaLogisticsClient;
 import com.ghasto.logistical_improvements.mixin.cog_material.WaterWheelRendererAccessor;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import com.simibubi.create.foundation.model.BakedModelHelper;
 import dev.engine_room.flywheel.api.model.Model;
 import dev.engine_room.flywheel.lib.model.baked.BakedModelBuilder;
@@ -18,7 +16,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;

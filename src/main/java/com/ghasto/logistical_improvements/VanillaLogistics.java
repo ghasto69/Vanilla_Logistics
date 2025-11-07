@@ -13,15 +13,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
-
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.ModContainer;
 import org.slf4j.LoggerFactory;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -30,7 +28,7 @@ public class VanillaLogistics {
     public static final String MODID = "vanilla_logistics";
     public static final Logger LOGGER = LoggerFactory.getLogger("Vanilla Logistics");
 
-    public VanillaLogistics(IEventBus eventBus, ModContainer modContainer) {
+    public VanillaLogistics(IEventBus eventBus) {
         eventBus.addListener(this::registerPackets);
         NeoForge.EVENT_BUS.addListener(this::useItemOnBlock);
     }

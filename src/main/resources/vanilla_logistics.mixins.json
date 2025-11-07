@@ -11,7 +11,8 @@
     "cog_material.KineticBlockEntityMixin",
     "cog_material.MechanicalMixerRendererMixin",
     "cog_material.SingleAxisRotatingVisualMixin",
-    "cog_material.WaterWheelRendererAccessor"
+    "cog_material.WaterWheelRendererAccessor",
+    "colored_packages.PackagerBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

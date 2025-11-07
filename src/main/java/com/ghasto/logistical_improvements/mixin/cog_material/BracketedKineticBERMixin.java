@@ -2,7 +2,6 @@ package com.ghasto.logistical_improvements.mixin.cog_material;
 
 import com.ghasto.logistical_improvements.cog_material.CogMaterial;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import net.createmod.catnip.render.SuperByteBuffer;
