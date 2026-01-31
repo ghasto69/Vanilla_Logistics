@@ -1,8 +1,8 @@
 package com.ghasto.logistical_improvements.mixin.batch_size;
 
+import com.ghasto.logistical_improvements.VanillaLogistics;
 import com.ghasto.logistical_improvements.batch_size.BatchSizeAccessor;
 import com.ghasto.logistical_improvements.batch_size.ConfigureBatchSize;
-import com.ghasto.logistical_improvements.VanillaLogistics;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBehaviour;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelPosition;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;

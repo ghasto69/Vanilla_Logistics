@@ -1,5 +1,6 @@
 package com.ghasto.logistical_improvements.mixin.cog_material;
 
+import com.ghasto.logistical_improvements.VanillaLogistics;
 import com.ghasto.logistical_improvements.cog_material.CogMaterialAccessor;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -42,11 +43,13 @@ public abstract class KineticBlockEntityMixin extends SmartBlockEntity implement
 
     @Inject(method = "write", at = @At("TAIL"))
     private void injectWrite(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
+        if(!getBlockState().is(VanillaLogistics.MATERIAL_COGS_TAG)) return; // Do not save if the block is not relevant
         tag.put("cog_material", NbtUtils.writeBlockState(this.material));
     }
 
     @Inject(method = "read", at = @At("TAIL"))
     private void injectRead(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
+        if(!getBlockState().is(VanillaLogistics.MATERIAL_COGS_TAG)) return;
         this.material = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), compound.getCompound("cog_material"));
     }
 

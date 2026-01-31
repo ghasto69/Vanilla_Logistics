@@ -1,0 +1,119 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"2": "create:block/andesite_block",
+		"6": "vanilla_logistics:block/engine",
+		"particle": "create:block/andesite_casing"
+	},
+	"elements": [
+		{
+			"from": [1, 0, 1],
+			"to": [15, 3, 15],
+			"faces": {
+				"north": {"uv": [8, 0, 15, 1], "texture": "#6"},
+				"east": {"uv": [8, 0, 15, 1], "texture": "#6"},
+				"south": {"uv": [8, 0, 15, 1], "texture": "#6"},
+				"west": {"uv": [8, 0, 15, 1], "texture": "#6"},
+				"up": {"uv": [8, 0, 15, 7], "texture": "#6"},
+				"down": {"uv": [8, 0, 15, 7], "texture": "#6"}
+			}
+		},
+		{
+			"from": [1, 0, 0],
+			"to": [15, 3, 1],
+			"faces": {
+				"north": {"uv": [1, 13, 15, 16], "texture": "#2"},
+				"east": {"uv": [15, 1, 16, 4], "texture": "#2"},
+				"west": {"uv": [0, 1, 1, 4], "texture": "#2"},
+				"up": {"uv": [1, 15, 15, 16], "texture": "#2"},
+				"down": {"uv": [1, 15, 15, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [1, 3, 0],
+			"to": [15, 4, 1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"faces": {
+				"north": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"east": {"uv": [15, 0, 16, 1], "texture": "#2"},
+				"south": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#2"},
+				"up": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"down": {"uv": [1, 0, 15, 1], "texture": "#2"}
+			}
+		},
+		{
+			"from": [1, 0, 15],
+			"to": [15, 3, 16],
+			"faces": {
+				"east": {"uv": [0, 1, 1, 4], "texture": "#2"},
+				"south": {"uv": [1, 13, 15, 16], "texture": "#2"},
+				"west": {"uv": [15, 1, 16, 4], "texture": "#2"},
+				"up": {"uv": [1, 15, 15, 16], "texture": "#2"},
+				"down": {"uv": [1, 15, 15, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [1, 3, 15],
+			"to": [15, 4, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"faces": {
+				"north": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#2"},
+				"south": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"west": {"uv": [15, 0, 16, 1], "texture": "#2"},
+				"up": {"uv": [1, 0, 15, 1], "texture": "#2"},
+				"down": {"uv": [1, 0, 15, 1], "texture": "#2"}
+			}
+		},
+		{
+			"from": [4, 3, 1],
+			"to": [12, 14, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 3, 0]},
+			"faces": {
+				"north": {"uv": [0, 10, 4, 15.5], "texture": "#6"},
+				"east": {"uv": [0, 4, 7, 9.5], "texture": "#6"},
+				"south": {"uv": [0, 10, 4, 15.5], "texture": "#6"},
+				"west": {"uv": [0, 4, 7, 9.5], "texture": "#6"},
+				"up": {"uv": [7, 4, 0, 0], "rotation": 90, "texture": "#6"}
+			}
+		}
+	],
+	"display": {},
+	"groups": [
+		{
+			"name": "shaft",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": []
+		},
+		{
+			"name": "pistons",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": []
+		},
+		{
+			"name": "pistons1",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": []
+		},
+		{
+			"name": "VoxelShapes",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				0,
+				{
+					"name": "group",
+					"origin": [0, 0, 0],
+					"color": 0,
+					"children": [1, 2, 3, 4, 5]
+				}
+			]
+		}
+	]
+}
