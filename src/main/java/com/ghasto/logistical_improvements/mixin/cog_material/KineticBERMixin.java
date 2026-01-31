@@ -6,6 +6,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.ponder.api.level.PonderLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class KineticBERMixin {
     @ModifyReturnValue(method = "getRotatedModel", at = @At("RETURN"))
     private SuperByteBuffer renderCogwheel(SuperByteBuffer original, KineticBlockEntity be, BlockState blockState) {
+        if(be.getLevel() instanceof PonderLevel) return original;
         if(blockState.is(AllBlocks.COGWHEEL))
             return CogMaterial.createBuffer(false, true, be);
         return original;

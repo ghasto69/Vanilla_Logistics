@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.ponder.api.level.PonderLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -17,6 +18,7 @@ public class BracketedKineticBERMixin {
             index = 1
     )
     private SuperByteBuffer replaceLargeCogwheel(SuperByteBuffer original, @Local(argsOnly = true) BracketedKineticBlockEntity blockEntity) {
+        if(blockEntity.getLevel() instanceof PonderLevel) return original;
         return CogMaterial.createBuffer(true, false, blockEntity);
     }
 }

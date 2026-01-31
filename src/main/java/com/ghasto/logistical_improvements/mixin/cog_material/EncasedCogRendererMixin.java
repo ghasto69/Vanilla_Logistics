@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.ponder.api.level.PonderLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,6 +20,7 @@ public class EncasedCogRendererMixin {
             at = @At("RETURN")
     )
     private SuperByteBuffer modelReturnMaterialAAAAA(SuperByteBuffer original, SimpleKineticBlockEntity be, BlockState state) {
+        if(be.getLevel() instanceof PonderLevel) return original;
         return CogMaterial.createBuffer(large, false, be);
     }
 }

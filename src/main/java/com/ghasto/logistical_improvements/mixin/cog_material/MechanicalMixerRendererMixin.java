@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerRenderer;
 import net.createmod.catnip.render.SuperByteBuffer;
+import net.createmod.ponder.api.level.PonderLevel;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -19,6 +20,7 @@ public class MechanicalMixerRendererMixin {
             )
     )
     private SuperByteBuffer renderMaterialCog(SuperByteBuffer original, @Local(argsOnly = true) MechanicalMixerBlockEntity blockEntity) {
+        if(blockEntity.getLevel() instanceof PonderLevel) return original;
         return CogMaterial.createBuffer(false, false, blockEntity);
     }
 }
