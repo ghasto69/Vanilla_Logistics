@@ -4,6 +4,8 @@ import com.ghasto.logistical_improvements.batch_size.BatchSizeAccessor;
 import com.ghasto.logistical_improvements.batch_size.ConfigureBatchSize;
 import com.ghasto.logistical_improvements.cog_material.CogMaterialAccessor;
 import com.ghasto.logistical_improvements.combustion_engine.CombustionEngineBlockEntity;
+import com.ghasto.logistical_improvements.unloaded_conveyors.ConveyorNetwork;
+import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -35,14 +37,19 @@ import java.util.HashMap;
 public class VanillaLogistics {
     public static final String MODID = "vanilla_logistics";
     public static final Logger LOGGER = LoggerFactory.getLogger("Vanilla Logistics");
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID).setTooltipModifierFactory(item ->
-            new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
-                    .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
-    );
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID)
+            .defaultCreativeTab(AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey())
+            .setTooltipModifierFactory(item ->
+                    new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                            .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
+            );
 
     public static final TagKey<Block> MATERIAL_COGS_TAG = TagKey.create(Registries.BLOCK, VanillaLogistics.asId("material_cogs"));
 
     public VanillaLogistics(IEventBus eventBus) {
+        // Has to come before the entries, registrate drops their client setup listeners (visuals, renderers) otherwise
+        REGISTRATE.registerEventListeners(eventBus);
+
         VLBlocks.init();
         VLBlockEntities.init();
         VLArmInteractionTypes.init();
@@ -51,8 +58,12 @@ public class VanillaLogistics {
 
         eventBus.addListener(this::registerPackets);
         NeoForge.EVENT_BUS.addListener(this::useItemOnBlock);
+        NeoForge.EVENT_BUS.addListener(ConveyorNetwork::onChunkLoad);
+        NeoForge.EVENT_BUS.addListener(ConveyorNetwork::onChunkUnload);
+        NeoForge.EVENT_BUS.addListener(ConveyorNetwork::onLevelTick);
+        NeoForge.EVENT_BUS.addListener(ConveyorNetwork::onLevelSave);
+        NeoForge.EVENT_BUS.addListener(ConveyorNetwork::onLevelUnload);
         eventBus.addListener(CombustionEngineBlockEntity::registerCapabilities);
-        REGISTRATE.registerEventListeners(eventBus);
     }
 
     public static ResourceLocation asId(String path) {

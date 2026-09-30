@@ -1,10 +1,7 @@
 package com.ghasto.logistical_improvements;
 
 import com.ghasto.logistical_improvements.cog_material.CogMaterial;
-import com.ghasto.logistical_improvements.combustion_engine.CombustionEngineVisual;
-import dev.engine_room.flywheel.api.visualization.VisualizerRegistry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.createmod.catnip.render.SuperByteBufferCache;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,10 +24,6 @@ public class VanillaLogisticsClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
         SuperByteBufferCache.getInstance().registerCompartment(CogMaterial.COMPARTMENT);
-        event.enqueueWork(() -> {
-            var engine_visual = new SimpleBlockEntityVisualizer<>(CombustionEngineVisual::new, v -> false);
-            VisualizerRegistry.setVisualizer(VLBlockEntities.COMBUSTION_ENGINE.get(), engine_visual);
-        });
     }
 
     @SubscribeEvent

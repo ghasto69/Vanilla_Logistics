@@ -10,7 +10,6 @@ import dev.engine_room.flywheel.lib.instance.TransformedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import net.createmod.catnip.animation.AnimationTickHolder;
-import net.minecraft.core.Direction;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -22,46 +21,32 @@ public class CombustionEngineVisual extends ShaftVisual<CombustionEngineBlockEnt
         super(context, blockEntity, partialTick);
 
         var instancer = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(VanillaLogisticsClient.PISTON));
-        pistons = new TransformedInstance[6];
+        pistons = new TransformedInstance[CombustionEngineRenderer.PISTONS];
         instancer.createInstances(pistons);
-        for (int i = 0; i < pistons.length; i++) {
-            pistons[i].light(computePackedLight());
-        }
+        relight(pistons);
     }
 
     private void animate() {
+        var axis = blockState.getValue(CombustionEngineBlock.HORIZONTAL_AXIS);
+        float renderTime = AnimationTickHolder.getRenderTime(level);
+
         for (int i = 0; i < pistons.length; i++) {
-            final float px = 1/16f;
             TransformedInstance piston = pistons[i];
             piston.setIdentityTransform().translate(getVisualPosition());
-
-            //Turn the block
-            piston.translate(0.5f, 0, 0.5f);
-            piston.rotateYDegrees(blockState.getValue(CombustionEngineBlock.HORIZONTAL_AXIS) == Direction.Axis.X ? 0 : 90);
-            piston.translate(-0.5f, 0, -0.5f);
-
-            piston.rotateYCenteredDegrees(90);
-
-            int side = i < 3 ? 1 : -1;
-            piston.translate(side * 7*px, px, 5*px);
-
-            int third = i < 3 ? i : i - 3;
-            piston.translate(0, 0, third * -5*px);
-
-            piston.rotateZCenteredDegrees(side * -22.5f);
-
-            if(blockEntity.fueled()) {
-                double movement = Math.sin(AnimationTickHolder.getRenderTime(level) / 1.5) / 15;
-                piston.translate(0, i % 2 == 0 ? movement : 1 / 15f - movement, 0);
-            }
-
-            piston.setChanged();
+            CombustionEngineRenderer.transformPiston(piston, i, axis, blockEntity.fueled(), renderTime)
+                    .setChanged();
         }
     }
 
     @Override
     public void beginFrame(DynamicVisual.Context ctx) {
         animate();
+    }
+
+    @Override
+    public void updateLight(float partialTick) {
+        super.updateLight(partialTick);
+        relight(pistons);
     }
 
     @Override

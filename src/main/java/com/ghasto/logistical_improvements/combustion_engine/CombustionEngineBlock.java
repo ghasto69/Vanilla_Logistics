@@ -4,6 +4,7 @@ import com.ghasto.logistical_improvements.VLBlockEntities;
 import com.simibubi.create.content.kinetics.base.HorizontalAxisKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -22,20 +23,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.stream.Stream;
 
 public class CombustionEngineBlock extends HorizontalAxisKineticBlock implements IBE<CombustionEngineBlockEntity> {
-    public static final VoxelShape SHAPE = Shapes.join(Block.box(1, 0, 1, 15, 2, 15), Stream.of(
-            Block.box(1, 0, 0, 15, 2, 1),
-            Block.box(1, 2, 0, 15, 3, 1),
-            Block.box(1, 0, 15, 15, 2, 16),
-            Block.box(1, 2, 15, 15, 3, 16),
-            Block.box(4, 2, 1, 12, 13, 15)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get(), BooleanOp.OR);
-
-    public static final VoxelShape SHAPE_ROTATED = Shapes.join(Block.box(1, 0, 1, 15, 2, 15), Stream.of(
-            Block.box(15, 0, 1, 16, 2, 15),   // Previously 1, 0, 0 to 15, 2, 1
-            Block.box(15, 2, 1, 16, 3, 15),   // Previously 1, 2, 0 to 15, 3, 1
-            Block.box(0, 0, 1, 1, 2, 15),     // Previously 1, 0, 15 to 15, 2, 16
-            Block.box(0, 2, 1, 1, 3, 15),     // Previously 1, 2, 15 to 15, 3, 16
-            Block.box(1, 2, 4, 15, 13, 12)    // Previously 4, 2, 1 to 12, 13, 15
+    public static final VoxelShape SHAPE = Shapes.join(Block.box(1, 0, 1, 15, 3, 15), Stream.of(
+            Block.box(1, 0, 0, 15, 3, 1),
+            Block.box(1, 3, 0, 15, 4, 1),
+            Block.box(1, 0, 15, 15, 3, 16),
+            Block.box(1, 3, 15, 15, 4, 16),
+            Block.box(4, 3, 1, 12, 14, 15)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get(), BooleanOp.OR);
 
     public CombustionEngineBlock(Properties properties) {
@@ -64,7 +57,7 @@ public class CombustionEngineBlock extends HorizontalAxisKineticBlock implements
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return state.getValue(HORIZONTAL_AXIS) == Direction.Axis.Z ? SHAPE : SHAPE_ROTATED;
+        return VoxelShaper.forHorizontalAxis(SHAPE, Direction.Axis.Z).get(state.getValue(HORIZONTAL_AXIS));
     }
 
     @Override
@@ -88,15 +81,14 @@ public class CombustionEngineBlock extends HorizontalAxisKineticBlock implements
 
         if(engine == null) return;
         if(!(entity instanceof ItemEntity itemEntity)) return;
+        if(!itemEntity.isAlive()) return;
 
         final var inserted = itemEntity.getItem().copy();
-        if (!CombustionEngineBlockEntity.canInsert(inserted)) return;
-
         final var remainder = engine.capability.insertItem(0, inserted, false);
         if(remainder.isEmpty()) {
-            itemEntity.kill();
+            itemEntity.discard();
+        } else if(remainder.getCount() < inserted.getCount()) {
+            itemEntity.setItem(remainder);
         }
-        int diff = inserted.getCount() - remainder.getCount();
-        itemEntity.getItem().shrink(diff);
     }
 }

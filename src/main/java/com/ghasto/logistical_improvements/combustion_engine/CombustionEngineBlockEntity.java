@@ -5,12 +5,14 @@ import com.ghasto.logistical_improvements.VLBlocks;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.item.ItemHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -28,7 +30,17 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity {
 
     public CombustionEngineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        inv = new ItemStackHandler(1);
+        inv = new ItemStackHandler(1) {
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                return canInsert(stack);
+            }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                setChanged();
+            }
+        };
         capability = new CombustionEngineInventoryHandler();
     }
 
@@ -36,7 +48,7 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 VLBlockEntities.COMBUSTION_ENGINE.get(),
-                (be, context) -> be.inv
+                (be, context) -> be.capability
         );
     }
 
@@ -65,27 +77,33 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity {
         super.tick();
         if(level.isClientSide()) return;
 
-        var stack = capability.getStackInSlot(0);
-        if (fuelTicksRemaining <= 5 && !stack.isEmpty()) {
-            int burnTime = stack.getBurnTime(RecipeType.SMELTING);
-            int previous = fuelTicksRemaining;
-            fuelTicksRemaining += burnTime;
-            stack.shrink(1);
-            notifyUpdate();
+        boolean wasFueled = fueled();
+        if (wasFueled)
+            fuelTicksRemaining--;
+        if (fuelTicksRemaining <= 5)
+            refuel();
 
-            if(previous == 0) {
-                updateGeneratedRotation();
-            }
+        // The remaining ticks are not synced, clients only care about whether the engine is running
+        if (wasFueled != fueled()) {
+            setChanged();
+            updateGeneratedRotation();
+        }
+    }
+
+    private void refuel() {
+        var stack = inv.getStackInSlot(0);
+        if (stack.isEmpty()) return;
+
+        int burnTime = stack.getBurnTime(RecipeType.SMELTING);
+        if (burnTime <= 0) {
+            // Not a fuel (anymore), hand it back instead of jamming the engine
+            inv.setStackInSlot(0, ItemStack.EMPTY);
+            Block.popResource(level, worldPosition, stack);
             return;
         }
 
-        if (!fueled()) return;
-
-        fuelTicksRemaining--;
-        notifyUpdate();
-        if (!fueled()) {
-            updateGeneratedRotation();
-        }
+        fuelTicksRemaining += burnTime;
+        inv.extractItem(0, 1, false);
     }
 
     @Override
@@ -93,6 +111,12 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity {
         super.initialize();
         if (!hasSource() || getGeneratedSpeed() > getTheoreticalSpeed())
             updateGeneratedRotation();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        ItemHelper.dropContents(level, worldPosition, inv);
     }
 
     public boolean fueled() {
@@ -113,15 +137,17 @@ public class CombustionEngineBlockEntity extends GeneratingKineticBlockEntity {
         inv.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
+    /**
+     * What other blocks get to see: fuel can be inserted, but not taken back out
+     */
     public class CombustionEngineInventoryHandler extends CombinedInvWrapper {
         public CombustionEngineInventoryHandler() {
             super(inv);
         }
 
         @Override
-        public @NotNull ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (!canInsert(stack)) return ItemStack.EMPTY;
-            return super.insertItem(slot, stack, simulate);
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
         }
     }
 

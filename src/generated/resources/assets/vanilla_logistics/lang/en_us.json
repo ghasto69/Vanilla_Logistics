@@ -1,0 +1,5 @@
+{
+  "block.vanilla_logistics.combustion_engine": "Combustion Engine",
+  "block.vanilla_logistics.combustion_engine.tooltip.summary": "A compact way to get some _stress_ by burning _fossil fuels_",
+  "tooltip.vanilla_logistics.minimum_batch_size": "Minimum Batch Size"
+}

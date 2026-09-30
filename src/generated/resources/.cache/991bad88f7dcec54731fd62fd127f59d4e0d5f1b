@@ -1,0 +1,10 @@
+// 1.21.1	2026-09-27T23:40:23.157718	Registrate Provider for vanilla_logistics [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (blocks), Tags (enchantments), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+bad2866b29c6ed95a1051b8981437026a71c5116 assets/vanilla_logistics/blockstates/combustion_engine.json
+61529eae84f5aa434db4dd65296565eae47ab3bb assets/vanilla_logistics/lang/en_ud.json
+5aba682b33a401464dfe36506c65261c330a14c9 assets/vanilla_logistics/lang/en_us.json
+598c916761248d48eb03f3742a63c37897a1b932 assets/vanilla_logistics/models/item/combustion_engine.json
+17aa69d39449bd385061b42d4174196e17fbf94f data/minecraft/tags/block/mineable/axe.json
+17aa69d39449bd385061b42d4174196e17fbf94f data/minecraft/tags/block/mineable/pickaxe.json
+06a9380337de033d9e4e5d075cbff8c184e27d49 data/vanilla_logistics/advancement/recipes/misc/combustion_engine.json
+e10ea5eb148db910c0e7b495342372984b336418 data/vanilla_logistics/loot_table/blocks/combustion_engine.json
+d1086b12fbec491edd6dd707f7f69ce3dcdf7d2e data/vanilla_logistics/recipe/combustion_engine.json

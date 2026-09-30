@@ -22,7 +22,7 @@ public interface VLBlocks {
                     .properties(p -> p.noOcclusion())
                     .transform(TagGen.axeOrPickaxe())
                     .onRegister(BlockStressValues.setGeneratorSpeed(64, true))
-                    .onRegister(block -> BlockStressValues.CAPACITIES.register(block, () -> 4096/64f)) //4096 su
+                    .onRegister(block -> BlockStressValues.CAPACITIES.register(block, () -> 8192/64f)) //8192 su
                     .recipe((context, provider) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, context.get(), 1)
                             .define('F', Items.FURNACE)
                             .define('S', AllBlocks.SHAFT)
@@ -30,7 +30,8 @@ public interface VLBlocks {
                             .define('A', AllItems.ANDESITE_ALLOY)
                             .pattern("SFS")
                             .pattern("ACA")
-                            .unlockedBy("has_furnace", RegistrateRecipeProvider.has(Items.FURNACE)))
+                            .unlockedBy("has_furnace", RegistrateRecipeProvider.has(Items.FURNACE))
+                            .save(provider))
                     .blockstate(BlockStateGen.horizontalAxisBlockProvider(true))
                     .simpleItem()
                     .register();

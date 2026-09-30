@@ -12,7 +12,8 @@
     "cog_material.MechanicalMixerRendererMixin",
     "cog_material.SingleAxisRotatingVisualMixin",
     "cog_material.WaterWheelRendererAccessor",
-    "colored_packages.PackagerBlockEntityMixin"
+    "colored_packages.PackagerBlockEntityMixin",
+    "unloaded_conveyors.ChainConveyorBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

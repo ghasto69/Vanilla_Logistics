@@ -50,7 +50,8 @@ public abstract class KineticBlockEntityMixin extends SmartBlockEntity implement
     @Inject(method = "read", at = @At("TAIL"))
     private void injectRead(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
         if(!getBlockState().is(VanillaLogistics.MATERIAL_COGS_TAG)) return;
-        this.material = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), compound.getCompound("cog_material"));
+        var read = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), compound.getCompound("cog_material"));
+        this.material = read == Blocks.AIR.defaultBlockState() ? Blocks.SPRUCE_PLANKS.defaultBlockState() : read;
     }
 
     @Inject(method = "switchToBlockState", at = @At("TAIL"))
